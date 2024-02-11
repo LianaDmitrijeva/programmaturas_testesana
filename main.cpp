@@ -4,47 +4,57 @@
 #include <string>
 using namespace std;
 
-void atskaite(const string& reisu_info) {
-    stringstream ss(reisu_info);
-    string id_reiss, ceļa_nr, laiks, maršruts_no, maršruts_uz;
-    getline(ss, id_reiss, ',');
-    getline(ss, ceļa_nr, ',');
-    getline(ss, laiks, ',');
-    getline(ss, maršruts_no, ',');
-    getline(ss, maršruts_uz, ',');
-    cout << endl;
-    cout << "Reisa ID: " << id_reiss << endl;
-    cout << "Maršruts: " << maršruts_no << " -" << maršruts_uz << endl;
-    if (maršruts_no == " Rīga") {cout << "Ceļa Nr: " << ceļa_nr << endl;}
-    cout << "Laiks: " << laiks << endl;
+void darbinieku_reisi() {
+    ifstream file("dati.txt");
+    bool darb_atrasts = false;
+    string rinda;
+    string id_darbinieks;
+
+    cout << "Ievadiet darbinieka ID: ";
+    cin >> id_darbinieks;
+    cout << "------------------------------------------" << endl;
+
+    while (getline(file, rinda)) {
+        stringstream ss(rinda);
+        string id, amats;
+        getline(ss, id, ',');
+
+        if (id == id_darbinieks) {
+            getline(ss, amats);
+            cout << "Darbinieka amats: " << amats << endl;
+            darb_atrasts = true;
+
+            while (getline(file, rinda) && !rinda.empty()) {
+                stringstream sstream(rinda);
+                string id_reiss, ceļa_nr, laiks, maršruts_no, maršruts_uz;
+                getline(sstream, id_reiss, ',');
+                getline(sstream, ceļa_nr, ',');
+                getline(sstream, laiks, ',');
+                getline(sstream, maršruts_no, ',');
+                getline(sstream, maršruts_uz, ',');
+                cout << endl;
+                cout << "Reisa ID: " << id_reiss << endl;
+                cout << "Maršruts: " << maršruts_no << " -" << maršruts_uz << endl;
+                if (maršruts_no == " Rīga") {
+                    cout << "Ceļa Nr: " << ceļa_nr << endl;
+                }
+                cout << "Laiks: " << laiks << endl;
+            }
+            break;
+        }
+    }
+    if (!darb_atrasts) cout << "Nav ierakstu par doto darbinieku!" << endl;
 }
+
 int main() {
     int ok = 1;
-    do{
-        string id_darbinieks, rinda;
-        cout << "Ievadiet darbinieka ID: ";
-        cin >> id_darbinieks;
-        cout << "------------------------------------------" << endl;
-        ifstream file("dati.txt");
-        bool darb_atrasts = false;
-        while (getline(file, rinda)) {
-            stringstream ss(rinda);
-            string id, amats;
-            getline(ss, id, ',');
-            if (id == id_darbinieks) {
-                getline(ss, amats);
-                cout << "Darbinieka amats: " << amats << endl;
-                darb_atrasts = true;
-                while (getline(file, rinda) && !rinda.empty()) {
-                    atskaite(rinda);
-                } break;
-            }
-        }
-        if (!darb_atrasts) cout << "Nav ierakstu par doto darbinieku!" << endl;
+    do {
+        darbinieku_reisi();
         cout << "------------------------------------------" << endl;
         cout << "Turpināt (1) | Beigt (0) :";
         cin >> ok;
         cout << endl;
-    } while (ok == 1);
+    }
+    while (ok == 1);
     return 0;
 }
