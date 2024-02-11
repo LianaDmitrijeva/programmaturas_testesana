@@ -4,17 +4,18 @@
 #include <string>
 using namespace std;
 
-void info_izvads(const string& reisu_info) {
+void pārskats(const string& reisu_info) {
     stringstream ss(reisu_info);
-    string id_reiss, ceļa_nr, laiks, maršruts;
+    string id_reiss, ceļa_nr, laiks, maršruts_no, maršruts_uz;
     getline(ss, id_reiss, ',');
     getline(ss, ceļa_nr, ',');
     getline(ss, laiks, ',');
-    getline(ss, maršruts);
+    getline(ss, maršruts_no, ',');
+    getline(ss, maršruts_uz, ',');
     cout << endl;
     cout << "Reisa ID: " << id_reiss << endl;
-    cout << "Maršruts: " << maršruts << endl;
-    cout << "Ceļa Nr: " << ceļa_nr << endl;
+    cout << "Maršruts: " << maršruts_no << " -" << maršruts_uz << endl;
+    if (maršruts_no == " Rīga") {cout << "Ceļa Nr: " << ceļa_nr << endl;}
     cout << "Laiks: " << laiks << endl;
 }
 int main() {
@@ -24,7 +25,6 @@ int main() {
         cout << "Ievadiet darbinieka ID: ";
         cin >> id_darbinieks;
         cout << "------------------------------------------" << endl;
-
         ifstream file("dati.txt");
         bool darb_atrasts = false;
         while (getline(file, rinda)) {
@@ -36,7 +36,7 @@ int main() {
                 cout << "Darbinieka amats: " << amats << endl;
                 darb_atrasts = true;
                 while (getline(file, rinda) && !rinda.empty()) {
-                    info_izvads(rinda);
+                    pārskats(rinda);
                 } break;
             }
         }
