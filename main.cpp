@@ -4,7 +4,7 @@
 #include <string>
 using namespace std;
 
-void pārskats(const string& reisu_info) {
+void atskaite(const string& reisu_info) {
     stringstream ss(reisu_info);
     string id_reiss, ceļa_nr, laiks, maršruts_no, maršruts_uz;
     getline(ss, id_reiss, ',');
@@ -36,7 +36,7 @@ int main() {
                 cout << "Darbinieka amats: " << amats << endl;
                 darb_atrasts = true;
                 while (getline(file, rinda) && !rinda.empty()) {
-                    pārskats(rinda);
+                    atskaite(rinda);
                 } break;
             }
         }
