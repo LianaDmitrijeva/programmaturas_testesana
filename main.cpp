@@ -6,9 +6,13 @@ using namespace std;
 
 void darbinieku_reisi() {
     ifstream file("dati.txt");
+    if (!file) {
+        cout << "Sistēmas kļūda, pamēģiniet vēlreiz  vēlāk!" << endl;
+        return;
+    }
+
     bool darb_atrasts = false;
-    string rinda;
-    string id_darbinieks;
+    string rinda, id_darbinieks;
 
     cout << "Ievadiet darbinieka ID: ";
     cin >> id_darbinieks;
@@ -34,7 +38,7 @@ void darbinieku_reisi() {
                 getline(sstream, maršruts_uz, ',');
                 cout << endl;
                 cout << "Reisa ID: " << id_reiss << endl;
-                cout << "Maršruts: " << maršruts_no << " -" << maršruts_uz << endl;
+                cout << "Maršruts: " << maršruts_no << " - " << maršruts_uz << endl;
                 if (maršruts_no == " Rīga") {
                     cout << "Ceļa Nr: " << ceļa_nr << endl;
                 }
@@ -47,14 +51,48 @@ void darbinieku_reisi() {
 }
 
 int main() {
-    int ok = 1;
+    string ok = "1";
     do {
         darbinieku_reisi();
         cout << "------------------------------------------" << endl;
         cout << "Turpināt (1) | Beigt (0) :";
         cin >> ok;
+        while (ok != "0" && ok != "1") {
+            cout << "Kļūda! Lūdzu ievadiet 1, lai turpinātu, vai 0, lai beigtu.\n" << endl;
+            cout << "Turpināt (1) | Beigt (0) :";
+            cin >> ok;
+        };
         cout << endl;
-    }
-    while (ok == 1);
+    } while (ok == "1");
     return 0;
 }
+
+// Piemēri
+//////////////////////////////////////////////
+//Ievadiet darbinieka ID: 1001
+// ------------------------------------------
+// Darbinieka amats:  mašinists
+
+// Reisa ID: 009
+// Maršruts:  Aizkraukle -  Rīga
+// Laiks:  19/02/2024 8:42
+
+// Reisa ID: 204
+// Maršruts:  Rīga -  Aizkraukle
+// Ceļa Nr:  4
+// Laiks:  19/02/2024 12:24
+// ------------------------------------------
+//////////////////////////////////////////////
+// Ievadiet darbinieka ID: 1002
+// ------------------------------------------
+// Darbinieka amats:  kontrolieris
+
+// Reisa ID: 009
+// Maršruts:  Aizkraukle -  Rīga
+// Laiks:  21/02/2024 8:42
+// ------------------------------------------
+//////////////////////////////////////////////
+// Ievadiet darbinieka ID: 1003
+// ------------------------------------------
+// Nav ierakstu par doto darbinieku!
+// ------------------------------------------
